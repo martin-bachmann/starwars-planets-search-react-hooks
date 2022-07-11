@@ -5,14 +5,16 @@ import PlanetsContext from './PlanetsContext';
 function Provider({ children }) {
   const [data, setData] = useState();
   const [isFetching, setIsFetching] = useState(true);
-  const [filter, setFilter] = useState({ filterByName: {
-    name: '',
-  } });
+  const [filter, setFilter] = useState({
+    filterByName: { name: '' },
+    filterByNumericValues: [],
+  });
 
   const fetchData = async () => {
     const fetchURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const response = await fetch(fetchURL);
     const planetsData = await response.json();
+    console.log(planetsData);
     const filteredData = planetsData.results.map((planet) => {
       const planetDetails = Object.entries(planet);
       return planetDetails.reduce((acc, planetParam) => (
@@ -24,25 +26,40 @@ function Provider({ children }) {
     setIsFetching(false);
   };
 
-  const changeFilter = (value, filterType) => {
-    console.log(value);
-    console.log(filterType);
-    setFilter({ ...filter, [filterType]: { name: value } });
+  const changeFilterByText = ({ target }) => {
+    const { value } = target;
+    setFilter({ ...filter, filterByName: { name: value } });
   };
 
-  const filterByName = ({ target }) => {
-    const { value } = target;
-    changeFilter(value, 'filterByName');
+  const changeFilterByNumber = (newFilter) => {
+    setFilter({
+      ...filter, filterByNumericValues: [...filter.filterByNumericValues, newFilter],
+    });
+  };
+
+  const testNumericFilter = (filterEl, planet) => {
+    const { column, comparison, value } = filterEl;
+    if (comparison === 'maior que') return Number(planet[column]) > value;
+    if (comparison === 'menor que') return Number(planet[column]) < value;
+    return planet[column] === value;
   };
 
   const filterTable = (planet) => {
     const { name } = planet;
-    return name.includes(filter.filterByName.name);
+    const { filterByNumericValues, filterByName } = filter;
+    if (!filterByNumericValues.length) return name.includes(filterByName.name);
+    return (
+      name.includes(filterByName.name)
+      && filterByNumericValues.every((filterEl) => testNumericFilter(filterEl, planet))
+    );
   };
 
   useEffect(() => fetchData(), []);
 
-  const context = { data, isFetching, filterByName, filterTable };
+  const context = {
+    data, filter, isFetching, changeFilterByText, changeFilterByNumber, filterTable,
+  };
+
   return (
     <PlanetsContext.Provider value={ context }>
       {children}
