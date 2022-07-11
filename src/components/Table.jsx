@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, isFetching } = useContext(PlanetsContext);
+  const { data, isFetching, filterTable } = useContext(PlanetsContext);
 
   return ( // Ver key creator
     <div>
@@ -15,7 +15,7 @@ function Table() {
             </tr>
           </thead>
           <tbody>
-            { data.map((planet) => (
+            { data.map((planet) => filterTable(planet) && (
               <tr key={ planet.name }>
                 { Object.values(planet).map((value) => <td key={ value }>{value}</td>) }
               </tr>))}

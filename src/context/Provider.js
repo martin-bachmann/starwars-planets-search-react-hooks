@@ -5,6 +5,9 @@ import PlanetsContext from './PlanetsContext';
 function Provider({ children }) {
   const [data, setData] = useState();
   const [isFetching, setIsFetching] = useState(true);
+  const [filter, setFilter] = useState({ filterByName: {
+    name: '',
+  } });
 
   const fetchData = async () => {
     const fetchURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
@@ -17,14 +20,29 @@ function Provider({ children }) {
           ? ({ ...acc, [planetParam[0]]: planetParam[1] })
           : acc), {});
     });
-    console.log(filteredData);
     setData(filteredData); // Verificar fetch e catch
     setIsFetching(false);
   };
 
+  const changeFilter = (value, filterType) => {
+    console.log(value);
+    console.log(filterType);
+    setFilter({ ...filter, [filterType]: { name: value } });
+  };
+
+  const filterByName = ({ target }) => {
+    const { value } = target;
+    changeFilter(value, 'filterByName');
+  };
+
+  const filterTable = (planet) => {
+    const { name } = planet;
+    return name.includes(filter.filterByName.name);
+  };
+
   useEffect(() => fetchData(), []);
 
-  const context = { data, isFetching };
+  const context = { data, isFetching, filterByName, filterTable };
   return (
     <PlanetsContext.Provider value={ context }>
       {children}
