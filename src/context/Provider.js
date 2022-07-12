@@ -14,7 +14,6 @@ function Provider({ children }) {
     const fetchURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const response = await fetch(fetchURL);
     const planetsData = await response.json();
-    console.log(planetsData);
     const filteredData = planetsData.results.map((planet) => {
       const planetDetails = Object.entries(planet);
       return planetDetails.reduce((acc, planetParam) => (

@@ -27,48 +27,57 @@ function NumberFilter() {
   return (
     <form onSubmit={ submitFilter }>
       <h2>NumberFilter</h2>
-      <select
-        data-testid="column-filter"
-        onChange={ handleChange }
-        name="column"
-        id="column"
-      >
-        { COLUMN_LIST.map((columnElement, i) => (
-          <option
-            key={ columnElement }
-            value={ columnElement }
-            selected={ i === 0 }
-          >
-            {columnElement}
-          </option>
-        ))}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        onChange={ handleChange }
-        name="comparison"
-        id="comparison"
-      >
-        { COMPARISON_LIST.map((comparisonElement, i) => (
-          <option
-            key={ comparisonElement }
-            value={ comparisonElement }
-            selected={ i === 0 }
-          >
-            {comparisonElement}
-          </option>
-        ))}
-        {' '}
+      <label htmlFor="column">
+        column
+        <select
+          data-testid="column-filter"
+          onChange={ handleChange }
+          name="column"
+          id="column"
+        >
+          { COLUMN_LIST.map((columnElement, i) => (
+            <option
+              name={ columnElement }
+              key={ columnElement }
+              value={ columnElement }
+              selected={ i === 0 }
+            >
+              {columnElement}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label htmlFor="comparison">
+        comparison
+        <select
+          data-testid="comparison-filter"
+          onChange={ handleChange }
+          name="comparison"
+          id="comparison"
+        >
+          { COMPARISON_LIST.map((comparisonElement, i) => (
+            <option
+              key={ comparisonElement }
+              value={ comparisonElement }
+              selected={ i === 0 }
+            >
+              {comparisonElement}
+            </option>
+          ))}
+          {' '}
 
-      </select>
-      <input
-        type="number"
-        name="value"
-        id="value"
-        value={ state.value }
-        onChange={ handleChange }
-        data-testid="value-filter"
-      />
+        </select>
+      </label>
+      <label htmlFor="value">
+        <input
+          type="number"
+          name="value"
+          id="value"
+          value={ state.value }
+          onChange={ handleChange }
+          data-testid="value-filter"
+        />
+      </label>
       <button
         type="submit"
         data-testid="button-filter"
