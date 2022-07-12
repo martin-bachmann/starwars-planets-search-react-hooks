@@ -8,6 +8,7 @@ function Provider({ children }) {
   const [filter, setFilter] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: { column: 'name', sort: 'ASC' },
   });
 
   const fetchData = async () => {
@@ -33,6 +34,12 @@ function Provider({ children }) {
   const changeFilterByNumber = (newFilter) => {
     setFilter({
       ...filter, filterByNumericValues: [...filter.filterByNumericValues, newFilter],
+    });
+  };
+
+  const changeOrder = (newOrder) => {
+    setFilter({
+      ...filter, order: newOrder,
     });
   };
 
@@ -67,6 +74,27 @@ function Provider({ children }) {
     });
   };
 
+  const orderTable = (planets) => {
+    const { order: { column, sort } } = filter;
+    const aFirst = -1;
+    const bFirst = 1;
+    if (column === 'name') {
+      return planets.sort((a, b) => (a.name > b.name ? bFirst : aFirst));
+    }
+    if (sort === 'DESC') {
+      return planets.sort((b, a) => {
+        if (a[column] === 'unknown') return aFirst;
+        if (b[column] === 'unknown') return bFirst;
+        return (a[column]) - (b[column]);
+      });
+    }
+    return planets.sort((a, b) => {
+      if (a[column] === 'unknown') return bFirst;
+      if (b[column] === 'unknown') return aFirst;
+      return (a[column]) - (b[column]);
+    });
+  };
+
   useEffect(() => fetchData(), []);
 
   const context = {
@@ -78,6 +106,8 @@ function Provider({ children }) {
     filterTable,
     removeFilter,
     removeAllFilters,
+    changeOrder,
+    orderTable,
   };
 
   return (

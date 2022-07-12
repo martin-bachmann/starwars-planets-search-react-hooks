@@ -1,18 +1,17 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import { COLUMN_LIST, COMPARISON_LIST } from '../data';
 
 function NumberFilter() {
-  const COLUMN_LIST = [
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ];
-  const COMPARISON_LIST = ['maior que', 'menor que', 'igual a'];
   const INITIAL_STATE = {
     column: COLUMN_LIST[0],
     comparison: COMPARISON_LIST[0],
     value: 0,
   };
 
-  const { changeFilterByNumber, filter } = useContext(PlanetsContext);
+  const {
+    changeFilterByNumber, filter, removeFilter, removeAllFilters,
+  } = useContext(PlanetsContext);
   const { filterByNumericValues } = filter;
 
   const [state, setState] = useState(INITIAL_STATE);
@@ -31,7 +30,7 @@ function NumberFilter() {
 
   return (
     <form onSubmit={ submitFilter }>
-      <h2>NumberFilter</h2>
+      <h3>NumberFilter</h3>
       <label htmlFor="column">
         column
         <select
@@ -87,6 +86,21 @@ function NumberFilter() {
         data-testid="button-filter"
       >
         Filtrar
+      </button>
+      {
+        filter.filterByNumericValues.map(({ column, comparison, value }) => (
+          <div key={ column } data-testid="filter">
+            <p>{`${column} | ${comparison} | ${value}`}</p>
+            <button type="button" onClick={ () => removeFilter(column) }>x</button>
+          </div>
+        ))
+      }
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ removeAllFilters }
+      >
+        Remover filtros
       </button>
     </form>
   );

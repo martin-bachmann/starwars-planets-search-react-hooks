@@ -175,8 +175,8 @@ describe('Testes de filtragem', () => {
     const filterButton = screen.getByRole('button', {name: /Filtrar/})
     userEvent.click(filterButton);
 
-    const columnFilter = screen.queryByRole('option', {name: /surface_water/});
-    expect(columnFilter).not.toBeInTheDocument();
+    const columnFilters = screen.getAllByRole('option', {name: /surface_water/});
+    expect(columnFilters).toHaveLength(1);
   });
   it('Testa se é possível remover um filtro individualmente', async () => {
     jest.spyOn(global, 'fetch');
@@ -249,10 +249,61 @@ describe('Testes de filtragem', () => {
 });
 
 describe('Testes de ordenação', () => {
-  it('Testa se é possível ordenar a página de forma ascendente', () => {
+  it('Testa se a página é renderizada ordenada por nome', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(testData),
+    });
+    
+    render(<App />);
 
+    const planetsList = await screen.findAllByTestId('planet-name');
+
+    expect(planetsList[0]).toHaveTextContent('Alderaan');
+    expect(planetsList[1]).toHaveTextContent('Bespin');   
   });
-  it('Testa se é possível ordenar a página de forma descendente', () => {
+  it('Testa se é possível ordenar a página de forma ascendente', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(testData),
+    });
+    
+    render(<App />);
 
+    const columnInput = await screen.findByTestId('column-sort');
+    const orderInput = screen.getByRole('radio', {name: /ascendente/});
+
+    userEvent.selectOptions(columnInput, 'surface_water');
+    userEvent.click(orderInput);
+
+    const orderButton = screen.getByRole('button', {name: /Ordenar/})
+    userEvent.click(orderButton);
+
+    const planetsList = screen.getAllByTestId('planet-name');
+
+    expect(planetsList[0]).toHaveTextContent('Bespin');
+    expect(planetsList[1]).toHaveTextContent('Tatooine');   
+  });
+  it('Testa se é possível ordenar a página de forma descendente', async () => {
+    jest.spyOn(global, 'fetch');
+    global.fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(testData),
+    });
+    
+    render(<App />);
+
+    const columnInput = await screen.findByTestId('column-sort');
+    const orderInput = screen.getByRole('radio', {name: /descendente/});
+
+    userEvent.selectOptions(columnInput, 'population');
+    userEvent.click(orderInput);
+
+    const orderButton = screen.getByRole('button', {name: /Ordenar/})
+    userEvent.click(orderButton);
+
+    const planetsList = screen.getAllByTestId('planet-name');
+
+    expect(planetsList[0]).toHaveTextContent('Coruscant');
+    expect(planetsList[8]).toHaveTextContent('Hoth');   
   });
 });
