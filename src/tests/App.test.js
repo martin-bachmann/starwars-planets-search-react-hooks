@@ -175,16 +175,8 @@ describe('Testes de filtragem', () => {
     const filterButton = screen.getByRole('button', {name: /Filtrar/})
     userEvent.click(filterButton);
 
-    expect(screen.getAllByRole('row')).toHaveLength(2);
-
-    userEvent.clear(numericInput);
-    userEvent.type(numericInput, '1');
-    userEvent.selectOptions(columnInput, 'surface_water');
-    userEvent.selectOptions(comparisonInput, 'igual a');
-
-    userEvent.click(filterButton);
-
-    expect(screen.getAllByRole('row')).toHaveLength(8);
+    const columnFilter = screen.queryByRole('option', {name: /surface_water/});
+    expect(columnFilter).not.toBeInTheDocument();
   });
   it('Testa se é possível remover um filtro individualmente', async () => {
     jest.spyOn(global, 'fetch');

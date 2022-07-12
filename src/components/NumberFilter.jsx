@@ -6,22 +6,27 @@ function NumberFilter() {
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ];
   const COMPARISON_LIST = ['maior que', 'menor que', 'igual a'];
-  const [state, setState] = useState({
+  const INITIAL_STATE = {
     column: COLUMN_LIST[0],
     comparison: COMPARISON_LIST[0],
     value: 0,
-  });
+  };
 
-  const { changeFilterByNumber } = useContext(PlanetsContext);
+  const { changeFilterByNumber, filter } = useContext(PlanetsContext);
+  const { filterByNumericValues } = filter;
 
-  const handleChange = ({ target }) => setState({
-    ...state, [target.name]: target.value,
-  });
+  const [state, setState] = useState(INITIAL_STATE);
+
+  const handleChange = ({ target }) => {
+    setState({
+      ...state, [target.name]: target.value,
+    });
+  };
 
   const submitFilter = (event) => {
     event.preventDefault();
-    console.log(state);
     changeFilterByNumber(state);
+    setState(INITIAL_STATE);
   };
 
   return (
@@ -35,16 +40,15 @@ function NumberFilter() {
           name="column"
           id="column"
         >
-          { COLUMN_LIST.map((columnElement, i) => (
-            <option
-              name={ columnElement }
-              key={ columnElement }
-              value={ columnElement }
-              selected={ i === 0 }
-            >
-              {columnElement}
-            </option>
-          ))}
+          { COLUMN_LIST.reduce((acc, columnElement) => (filterByNumericValues
+            .some((filterEl) => filterEl.column === columnElement) ? acc : [...acc, (
+              <option
+                name={ columnElement }
+                key={ columnElement }
+              >
+                {columnElement}
+              </option>
+            )]), [])}
         </select>
       </label>
       <label htmlFor="comparison">
