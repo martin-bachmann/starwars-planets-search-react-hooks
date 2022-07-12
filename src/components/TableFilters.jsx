@@ -4,7 +4,7 @@ import NumberFilter from './NumberFilter';
 import TextFilter from './TextFilter';
 
 function TableFilters() {
-  const { filter } = useContext(PlanetsContext);
+  const { filter, removeFilter, removeAllFilters } = useContext(PlanetsContext);
   return (
     <div>
       <h2>TableFilters</h2>
@@ -12,8 +12,19 @@ function TableFilters() {
       <NumberFilter />
       {
         filter.filterByNumericValues.map(({ column, comparison, value }) => (
-          <p key={ column }>{`${column} | ${comparison} | ${value}`}</p>))
+          <div key={ column } data-testid="filter">
+            <p>{`${column} | ${comparison} | ${value}`}</p>
+            <button type="button" onClick={ () => removeFilter(column) }>x</button>
+          </div>
+        ))
       }
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ removeAllFilters }
+      >
+        Remover filtros
+      </button>
     </div>
   );
 }

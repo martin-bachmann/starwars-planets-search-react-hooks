@@ -53,10 +53,31 @@ function Provider({ children }) {
     );
   };
 
+  const removeFilter = (column) => {
+    setFilter({
+      ...filter,
+      filterByNumericValues: filter.filterByNumericValues
+        .filter((filterEl) => filterEl.column !== column),
+    });
+  };
+
+  const removeAllFilters = () => {
+    setFilter({
+      ...filter, filterByNumericValues: [],
+    });
+  };
+
   useEffect(() => fetchData(), []);
 
   const context = {
-    data, filter, isFetching, changeFilterByText, changeFilterByNumber, filterTable,
+    data,
+    filter,
+    isFetching,
+    changeFilterByText,
+    changeFilterByNumber,
+    filterTable,
+    removeFilter,
+    removeAllFilters,
   };
 
   return (

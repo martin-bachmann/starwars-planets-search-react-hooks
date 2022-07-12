@@ -198,12 +198,12 @@ describe('Testes de filtragem', () => {
     const filterButton = screen.getByRole('button', {name: /Filtrar/})
     userEvent.click(filterButton);
 
-    expect(screen.getByText(/surface_water | igual a | 1/)).toBeInTheDocument();
+    expect(screen.getByText('surface_water | igual a | 1')).toBeInTheDocument();
 
     const filterRemover = screen.getByRole('button', {name: 'x'});
     userEvent.click(filterRemover);
 
-    expect(screen.getByText(/surface_water | igual a | 1/)).not.toBeInTheDocument();
+    expect(screen.queryByText('surface_water | igual a | 1')).not.toBeInTheDocument();
   });
   it('Testa se existe um botão que remove todos os filtros', async () => {
     jest.spyOn(global, 'fetch');
@@ -214,7 +214,7 @@ describe('Testes de filtragem', () => {
     render(<App />);
 
     // Adiciona o primeiro filtro numérico
-    const numericInput = screen.getByRole('spinbutton');
+    const numericInput = await screen.findByRole('spinbutton');
     const columnInput = screen.getByRole('combobox', {name: /column/});
     const comparisonInput = screen.getByRole('combobox', {name: /comparison/})
 
@@ -237,14 +237,14 @@ describe('Testes de filtragem', () => {
     expect(screen.getAllByRole('row')).toHaveLength(2);
 
     expect(screen.getByText(/population | maior que | 1000/)).toBeInTheDocument();
-    expect(screen.getByText(/surface_water | igual a | 1/)).toBeInTheDocument();
+    expect(screen.getByText('surface_water | igual a | 1')).toBeInTheDocument();
 
     // Remove os filtros
-    const removeButton = screen.getByRole('button', {name: /remover/});
+    const removeButton = screen.getByRole('button', {name: /Remover/});
     userEvent.click(removeButton);
 
-    expect(screen.getByText(/population | maior que | 1000/)).not.toBeInTheDocument();
-    expect(screen.getByText(/surface_water | igual a | 1/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/population | maior que | 1000/)).not.toBeInTheDocument();
+    expect(screen.queryByText('surface_water | igual a | 1')).not.toBeInTheDocument();
   });
 });
 
