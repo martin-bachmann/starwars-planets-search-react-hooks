@@ -28,7 +28,7 @@ function NumberFilter() {
     setState(INITIAL_STATE);
   };
 
-  return (
+  return ( // Criar componente para inputs do tipo select!
     <form onSubmit={ submitFilter }>
       <h3>NumberFilter</h3>
       <label htmlFor="column">

@@ -4,7 +4,7 @@ import App from '../App';
 import testData from '../../cypress/mocks/testData';
 import userEvent from '@testing-library/user-event';
 
-describe('Testes de renderização', () => {
+describe('Testes de renderização', () => { // Organizar melhor os testes e criar arquivo próprio mara o mock
   it('Testa a renderização da página', () => {
     render(<App />);
     const titleElement = screen.getByText(/Star Wars Planets Search/i);

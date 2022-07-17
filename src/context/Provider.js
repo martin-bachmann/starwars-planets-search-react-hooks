@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
 
+// Declarar aqui o initial state
+
 function Provider({ children }) {
   const [data, setData] = useState();
   const [isFetching, setIsFetching] = useState(true);
@@ -11,7 +13,7 @@ function Provider({ children }) {
     order: { column: 'name', sort: 'ASC' },
   });
 
-  const fetchData = async () => {
+  const fetchData = async () => { // Podia organizar melhor esse fetch e o useEffect abaixo.
     const fetchURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
     const response = await fetch(fetchURL);
     const planetsData = await response.json();
@@ -26,7 +28,7 @@ function Provider({ children }) {
     setIsFetching(false);
   };
 
-  const changeFilterByText = ({ target }) => {
+  const changeFilterByText = ({ target }) => { // Cogitar se vale a pena mudar para ser apenas uma função
     const { value } = target;
     setFilter({ ...filter, filterByName: { name: value } });
   };
@@ -50,7 +52,7 @@ function Provider({ children }) {
     return planet[column] === value;
   };
 
-  const filterTable = (planet) => {
+  const filterTable = (planet) => { // Pensar como seria essa lógica com um useEffect
     const { name } = planet;
     const { filterByNumericValues, filterByName } = filter;
     if (!filterByNumericValues.length) return name.includes(filterByName.name);
@@ -76,9 +78,9 @@ function Provider({ children }) {
 
   const orderTable = (planets) => {
     const { order: { column, sort } } = filter;
-    const aFirst = -1;
+    const aFirst = -1; // Mudar para 1 e NOT_CHANGE
     const bFirst = 1;
-    if (column === 'name') {
+    if (column === 'name') { // Tentar retirar esse if. Tentar juntar lógica ASC e DESC
       return planets.sort((a, b) => (a.name > b.name ? bFirst : aFirst));
     }
     if (sort === 'DESC') {
@@ -95,7 +97,7 @@ function Provider({ children }) {
     });
   };
 
-  useEffect(() => fetchData(), []);
+  useEffect(() => fetchData(), []); // Será que vale a pena fazer um useEffect com filter?
 
   const context = {
     data,
@@ -118,7 +120,7 @@ function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default Provider;

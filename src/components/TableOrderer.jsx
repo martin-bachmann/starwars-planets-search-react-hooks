@@ -3,7 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import { COLUMN_LIST } from '../data';
 
 function TableOrderer() {
-  const INITIAL_STATE = { column: 'population', sort: 'ASC' };
+  const INITIAL_STATE = { column: COLUMN_LIST[0], sort: 'ASC' };
 
   const { changeOrder } = useContext(PlanetsContext);
 
@@ -33,7 +33,7 @@ function TableOrderer() {
         >
           { COLUMN_LIST.map((columnElement) => (
             <option
-              name={ columnElement }
+              // name={ columnElement }
               key={ columnElement }
             >
               {columnElement}
