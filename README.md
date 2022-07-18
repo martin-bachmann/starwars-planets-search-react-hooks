@@ -1,10 +1,21 @@
-# 🚧 README em construção 🚧
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Projeto Star Wars Planets Search (React, Hooks, ContextAPI, RTL)
+
+Aplicação que cria uma tabela de planetas de Star Wars com detalhes e filtros diversos, possibilitando diversas formas de pesquisa, utilizando React, Hooks, Context API e testes. Projeto desenvolvido no modulo de FrontEnd do curso da Trybe.
+
+Confira aqui o [site]() em funcionamento!
+
+## Resultado final
+![starwarsPlanetsSearch_deploy]()
+
+## Técnologias usadas
+<p align="left">
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> 
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> 
+  <img src="https://www.learnstorybook.com/intro-to-storybook/logo-jest.png" alt="jest" width="40" height="40" />
+</p>
+
+## Para iniciar e executar o projeto
+```bash
+npm install
+npm start
+``` 
