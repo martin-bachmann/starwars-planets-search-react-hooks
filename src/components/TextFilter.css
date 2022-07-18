@@ -1,0 +1,17 @@
+.text-filter-label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+  justify-content: center;
+  margin: 1vw;
+}
+
+.text-filter-input {
+  background: none;
+  border: 1.5px solid rgb(122, 114, 114);
+  border-radius: 8px;
+  height: 1.2em;
+  padding: 0.4em 0;
+  width: 16em;
+}

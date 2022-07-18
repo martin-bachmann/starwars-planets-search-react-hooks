@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './SelectInput.css';
 
 function SelectInput({ name, label, testid, handleChange, optionList }) {
   return (
-    <label htmlFor={ name }>
+    <label htmlFor={ name } className="select-label">
       {label}
       <select
         data-testid={ testid }

@@ -15,7 +15,4 @@ export const TABLE_HEADER = [
   'Surface Water',
   'Population',
   'Films',
-  'Created',
-  'Edited',
-  'URL',
 ];

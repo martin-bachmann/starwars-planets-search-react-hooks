@@ -3,6 +3,7 @@ import PlanetsContext from '../context/PlanetsContext';
 import { COLUMN_LIST } from '../data';
 import Input from './Input';
 import SelectInput from './SelectInput';
+import './TableOrderer.css';
 
 const INITIAL_STATE = { column: COLUMN_LIST[0], sort: 'ASC' };
 
@@ -23,7 +24,7 @@ function TableOrderer() {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
+    <form className="table-orderer-form" onSubmit={ handleSubmit }>
       <SelectInput
         name="column"
         label="Ordenar"
@@ -31,27 +32,36 @@ function TableOrderer() {
         handleChange={ handleChange }
         optionList={ COLUMN_LIST }
       />
-      <Input
-        name="sort"
-        id="ASC"
-        label="Ascendente"
-        type="radio"
-        value="ASC"
-        testid="column-sort-input-asc"
-        handleChange={ handleChange }
-      />
-      <Input
-        name="sort"
-        id="DESC"
-        label="Descendente"
-        type="radio"
-        value="DESC"
-        testid="column-sort-input-desc"
-        handleChange={ handleChange }
-      />
+      <div className="orderer-buttons-wrapper">
+        <Input
+          name="sort"
+          id="ASC"
+          label=" Ascendente"
+          labelFirst={ false }
+          type="radio"
+          value="ASC"
+          testid="column-sort-input-asc"
+          handleChange={ handleChange }
+          labelClass="orderer-radio-label"
+          inputClass="orderer-radio-input"
+        />
+        <Input
+          name="sort"
+          id="DESC"
+          label=" Descendente"
+          labelFirst={ false }
+          type="radio"
+          value="DESC"
+          testid="column-sort-input-desc"
+          handleChange={ handleChange }
+          labelClass="orderer-radio-label"
+          inputClass="orderer-radio-input"
+        />
+      </div>
       <button
         type="submit"
         data-testid="column-sort-button"
+        className="table-orderer-button"
       >
         Ordenar
       </button>

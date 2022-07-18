@@ -1,0 +1,26 @@
+table {
+  border: transparent;
+  border-spacing: 0;
+  margin: 0.7vw;
+}
+
+th {
+  background-color: rgba(17, 17, 17, 0.959);
+  border: transparent;
+  display: table-cell;
+  font-size: 0.8em;
+  padding: 16px;
+}
+
+td {
+  border: transparent;
+  border-top: 1px solid rgb(81, 81, 81);
+  display: table-cell;
+  font-size: 0.8em;
+  padding: 16px;
+}
+
+.film-text {
+  font-size: 1em;
+  width: 16em;
+}

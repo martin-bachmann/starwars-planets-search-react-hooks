@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function Input({ name, label, id, type, value, testid, handleChange }) {
+function Input({
+  name, label, labelFirst, id, type, value, testid, handleChange, labelClass, inputClass,
+}) {
   return (
-    <label htmlFor={ id || name }>
-      {label}
+    <label htmlFor={ id || name } className={ `input-label ${labelClass}` }>
+      {labelFirst && label}
       <input
         type={ type }
         name={ name }
@@ -12,7 +14,9 @@ function Input({ name, label, id, type, value, testid, handleChange }) {
         value={ value }
         onChange={ handleChange }
         data-testid={ testid }
+        className={ `input-input ${inputClass}` }
       />
+      {!labelFirst && label}
     </label>
   );
 }
@@ -20,6 +24,7 @@ function Input({ name, label, id, type, value, testid, handleChange }) {
 Input.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  labelFirst: PropTypes.bool,
   id: PropTypes.string,
   type: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
@@ -28,11 +33,16 @@ Input.propTypes = {
   ]).isRequired,
   testid: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
+  labelClass: PropTypes.string,
+  inputClass: PropTypes.string,
 };
 
 Input.defaultProps = {
+  labelFirst: true,
   id: '',
   testid: '',
+  labelClass: '',
+  inputClass: '',
 };
 
 export default Input;

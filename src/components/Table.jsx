@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import PlanetsContext from '../context/PlanetsContext';
 import { TABLE_HEADER } from '../data';
+import './Table.css';
 
 function Table() {
   const { isFetching, setTable } = useContext(PlanetsContext);
@@ -23,7 +24,10 @@ function Table() {
                     data-testid={ value === planet.name && 'planet-name' }
                     key={ uuidv4() }
                   >
-                    {value}
+                    {typeof value === 'string'
+                      ? value : value.map((film) => (
+                        <p key={ uuidv4() } className="film-text">{film}</p>
+                      ))}
                   </td>)) }
               </tr>))}
           </tbody>

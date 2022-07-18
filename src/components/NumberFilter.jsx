@@ -4,6 +4,7 @@ import { COLUMN_LIST, COMPARISON_LIST } from '../data';
 import FilterButton from './FilterButton';
 import Input from './Input';
 import SelectInput from './SelectInput';
+import './NumberFilter.css';
 
 const INITIAL_STATE = {
   column: COLUMN_LIST[0],
@@ -36,53 +37,61 @@ function NumberFilter() {
   };
 
   return (
-    <form onSubmit={ submitFilter }>
-      <SelectInput
-        name="column"
-        label="Coluna"
-        testid="column-filter"
-        handleChange={ handleChange }
-        optionList={ checkUsedFilters(COLUMN_LIST) }
-      />
-      <SelectInput
-        name="comparison"
-        label="Operador"
-        testid="comparison-filter"
-        handleChange={ handleChange }
-        optionList={ COMPARISON_LIST }
-      />
-      <Input
-        name="value"
-        label=""
-        type="number"
-        value={ state.value }
-        testid="value-filter"
-        handleChange={ handleChange }
-      />
-      <button
-        type="submit"
-        data-testid="button-filter"
-      >
-        Filtrar
-      </button>
-      {
-        filter.filterByNumericValues.map(({ column, comparison, value }) => (
-          <FilterButton
-            key={ column }
-            column={ column }
-            comparison={ comparison }
-            value={ value }
-          />
-        ))
-      }
-      <button
-        type="button"
-        data-testid="button-remove-filters"
-        onClick={ removeAllFilters }
-      >
-        Remover filtros
-      </button>
-    </form>
+    <div className="numeric-filters-wrapper">
+      <form className="numeric-filter-form" onSubmit={ submitFilter }>
+        <SelectInput
+          name="column"
+          label="Coluna"
+          testid="column-filter"
+          handleChange={ handleChange }
+          optionList={ checkUsedFilters(COLUMN_LIST) }
+        />
+        <SelectInput
+          name="comparison"
+          label="Operador"
+          testid="comparison-filter"
+          handleChange={ handleChange }
+          optionList={ COMPARISON_LIST }
+        />
+        <Input
+          name="value"
+          label=""
+          type="number"
+          value={ state.value }
+          testid="value-filter"
+          handleChange={ handleChange }
+          labelClass="number-filter-label"
+          inputClass="number-filter-input"
+        />
+        <button
+          type="submit"
+          data-testid="button-filter"
+          className="numeric-filter-button"
+        >
+          Filtrar
+        </button>
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ removeAllFilters }
+          className="numeric-filter-button"
+        >
+          Remover filtros
+        </button>
+      </form>
+      <div className="filter-buttons-wrapper">
+        {
+          filter.filterByNumericValues.map(({ column, comparison, value }) => (
+            <FilterButton
+              key={ column }
+              column={ column }
+              comparison={ comparison }
+              value={ value }
+            />
+          ))
+        }
+      </div>
+    </div>
   );
 }
 
