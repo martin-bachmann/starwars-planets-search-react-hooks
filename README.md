@@ -5,7 +5,7 @@ Aplicação que cria uma tabela de planetas de Star Wars com detalhes e filtros 
 Confira aqui o [site](https://starwars-planets-search-react-hooks.vercel.app/) em funcionamento!
 
 ## Resultado final
-![starwarsPlanetsSearch_deploy](https://github.com/martin-bachmann/trybewallet-react-redux/blob/main/public/starWarsPlanetsSearch_deploy.gif?raw=true)
+![starwarsPlanetsSearch_deploy](https://github.com/martin-bachmann/starwars-planets-search-react-hooks/blob/main/public/starWarsPlanetsSearch_deploy.gif?raw=true)
 
 ## Técnologias usadas
 <p align="left">
@@ -18,4 +18,10 @@ Confira aqui o [site](https://starwars-planets-search-react-hooks.vercel.app/) e
 ```bash
 npm install
 npm start
+``` 
+
+## Para executar os testes
+```bash
+npm run test
+a
 ``` 
