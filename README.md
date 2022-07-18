@@ -2,7 +2,7 @@
 
 Aplicação que cria uma tabela de planetas de Star Wars com detalhes e filtros diversos, possibilitando diversas formas de pesquisa, utilizando React, Hooks, Context API e testes. Projeto desenvolvido no modulo de FrontEnd do curso da Trybe.
 
-Confira aqui o [site]() em funcionamento!
+Confira aqui o [site](https://starwars-planets-search-react-hooks.vercel.app/) em funcionamento!
 
 ## Resultado final
 ![starwarsPlanetsSearch_deploy](https://github.com/martin-bachmann/trybewallet-react-redux/blob/main/public/starWarsPlanetsSearch_deploy.gif?raw=true)
