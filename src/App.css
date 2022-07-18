@@ -27,3 +27,15 @@ footer {
   font-size: 0.9em;
   padding: 1.2vw;
 }
+
+button {
+  cursor: pointer;
+}
+
+input {
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}
