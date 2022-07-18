@@ -1,65 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PlanetsContext from './PlanetsContext';
+import fetchPlanets from '../services/fetchPlanets';
 
-// Declarar aqui o initial state
+const INITIAL_STATE = {
+  filterByName: { name: '' },
+  filterByNumericValues: [],
+  order: { column: 'name', sort: 'ASC' },
+};
+
+const CHANGE = -1;
+const NO_CHANGE = 1;
 
 function Provider({ children }) {
   const [data, setData] = useState();
   const [isFetching, setIsFetching] = useState(true);
-  const [filter, setFilter] = useState({
-    filterByName: { name: '' },
-    filterByNumericValues: [],
-    order: { column: 'name', sort: 'ASC' },
-  });
+  const [filter, setFilter] = useState(INITIAL_STATE);
 
-  const fetchData = async () => { // Podia organizar melhor esse fetch e o useEffect abaixo.
-    const fetchURL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-    const response = await fetch(fetchURL);
-    const planetsData = await response.json();
-    const filteredData = planetsData.results.map((planet) => {
-      const planetDetails = Object.entries(planet);
-      return planetDetails.reduce((acc, planetParam) => (
-        planetParam[0] !== 'residents'
-          ? ({ ...acc, [planetParam[0]]: planetParam[1] })
-          : acc), {});
-    });
-    setData(filteredData); // Verificar fetch e catch
-    setIsFetching(false);
-  };
+  useEffect(() => {
+    const fetchPlanetsData = async () => {
+      const planets = await fetchPlanets();
+      setData(planets);
+      setIsFetching(false);
+    };
+    fetchPlanetsData();
+  }, []);
 
-  const changeFilterByText = ({ target }) => { // Cogitar se vale a pena mudar para ser apenas uma função
-    const { value } = target;
-    setFilter({ ...filter, filterByName: { name: value } });
-  };
-
-  const changeFilterByNumber = (newFilter) => {
-    setFilter({
-      ...filter, filterByNumericValues: [...filter.filterByNumericValues, newFilter],
-    });
-  };
-
-  const changeOrder = (newOrder) => {
-    setFilter({
-      ...filter, order: newOrder,
-    });
-  };
-
-  const testNumericFilter = (filterEl, planet) => {
-    const { column, comparison, value } = filterEl;
-    if (comparison === 'maior que') return Number(planet[column]) > value;
-    if (comparison === 'menor que') return Number(planet[column]) < value;
-    return planet[column] === value;
-  };
-
-  const filterTable = (planet) => { // Pensar como seria essa lógica com um useEffect
-    const { name } = planet;
-    const { filterByNumericValues, filterByName } = filter;
-    if (!filterByNumericValues.length) return name.includes(filterByName.name);
-    return (
-      name.includes(filterByName.name)
-      && filterByNumericValues.every((filterEl) => testNumericFilter(filterEl, planet))
-    );
+  const changeFilter = (type, value) => {
+    setFilter({ ...filter, [type]: value });
   };
 
   const removeFilter = (column) => {
@@ -78,38 +46,49 @@ function Provider({ children }) {
 
   const orderTable = (planets) => {
     const { order: { column, sort } } = filter;
-    const aFirst = -1; // Mudar para 1 e NOT_CHANGE
-    const bFirst = 1;
-    if (column === 'name') { // Tentar retirar esse if. Tentar juntar lógica ASC e DESC
-      return planets.sort((a, b) => (a.name > b.name ? bFirst : aFirst));
+    if (column === 'name') {
+      return planets.sort((a, b) => (a.name > b.name ? NO_CHANGE : CHANGE));
     }
     if (sort === 'DESC') {
-      return planets.sort((b, a) => {
-        if (a[column] === 'unknown') return aFirst;
-        if (b[column] === 'unknown') return bFirst;
-        return (a[column]) - (b[column]);
+      return planets.sort((planetB, planetA) => {
+        if (planetA[column] === 'unknown') return CHANGE;
+        if (planetB[column] === 'unknown') return NO_CHANGE;
+        return (planetA[column]) - (planetB[column]);
       });
     }
-    return planets.sort((a, b) => {
-      if (a[column] === 'unknown') return bFirst;
-      if (b[column] === 'unknown') return aFirst;
-      return (a[column]) - (b[column]);
+    return planets.sort((planetA, planetB) => {
+      if (planetA[column] === 'unknown') return NO_CHANGE;
+      if (planetB[column] === 'unknown') return CHANGE;
+      return (planetA[column]) - (planetB[column]);
     });
   };
 
-  useEffect(() => fetchData(), []); // Será que vale a pena fazer um useEffect com filter?
+  const testNumericFilter = (filterEl, planet) => {
+    const { column, comparison, value } = filterEl;
+    if (comparison === 'maior que') return Number(planet[column]) > value;
+    if (comparison === 'menor que') return Number(planet[column]) < value;
+    return planet[column] === value;
+  };
+
+  const filterTable = (planets) => planets.filter((planet) => {
+    const { filterByNumericValues, filterByName } = filter;
+    if (!filterByNumericValues.length) return planet.name.includes(filterByName.name);
+    return (
+      planet.name.includes(filterByName.name)
+        && filterByNumericValues.every((filterEl) => testNumericFilter(filterEl, planet))
+    );
+  });
+
+  const setTable = () => orderTable(filterTable(data));
 
   const context = {
     data,
     filter,
     isFetching,
-    changeFilterByText,
-    changeFilterByNumber,
-    filterTable,
+    changeFilter,
     removeFilter,
     removeAllFilters,
-    changeOrder,
-    orderTable,
+    setTable,
   };
 
   return (

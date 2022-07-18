@@ -1,13 +1,15 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import { COLUMN_LIST } from '../data';
+import Input from './Input';
+import SelectInput from './SelectInput';
+
+const INITIAL_STATE = { column: COLUMN_LIST[0], sort: 'ASC' };
 
 function TableOrderer() {
-  const INITIAL_STATE = { column: COLUMN_LIST[0], sort: 'ASC' };
-
-  const { changeOrder } = useContext(PlanetsContext);
-
   const [state, setState] = useState(INITIAL_STATE);
+
+  const { changeFilter } = useContext(PlanetsContext);
 
   const handleChange = ({ target }) => {
     setState({
@@ -17,52 +19,36 @@ function TableOrderer() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    changeOrder(state);
+    changeFilter('order', state); // Conferir essa função no provider
   };
 
   return (
     <form onSubmit={ handleSubmit }>
-      <h3>TableOrderer</h3>
-      <label htmlFor="column">
-        orderer
-        <select
-          onChange={ handleChange }
-          name="column"
-          id="column"
-          data-testid="column-sort"
-        >
-          { COLUMN_LIST.map((columnElement) => (
-            <option
-              // name={ columnElement }
-              key={ columnElement }
-            >
-              {columnElement}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label htmlFor="ASC">
-        ascendente
-        <input
-          type="radio"
-          id="ASC"
-          value="ASC"
-          name="sort"
-          data-testid="column-sort-input-asc"
-          onChange={ handleChange }
-        />
-      </label>
-      <label htmlFor="DESC">
-        descendente
-        <input
-          type="radio"
-          id="DESC"
-          value="DESC"
-          name="sort"
-          data-testid="column-sort-input-desc"
-          onChange={ handleChange }
-        />
-      </label>
+      <SelectInput
+        name="column"
+        label="Ordenar"
+        testid="column-sort"
+        handleChange={ handleChange }
+        optionList={ COLUMN_LIST }
+      />
+      <Input
+        name="sort"
+        id="ASC"
+        label="Ascendente"
+        type="radio"
+        value="ASC"
+        testid="column-sort-input-asc"
+        handleChange={ handleChange }
+      />
+      <Input
+        name="sort"
+        id="DESC"
+        label="Descendente"
+        type="radio"
+        value="DESC"
+        testid="column-sort-input-desc"
+        handleChange={ handleChange }
+      />
       <button
         type="submit"
         data-testid="column-sort-button"

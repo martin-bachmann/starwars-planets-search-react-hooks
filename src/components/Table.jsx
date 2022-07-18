@@ -1,26 +1,27 @@
 import React, { useContext } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import PlanetsContext from '../context/PlanetsContext';
+import { TABLE_HEADER } from '../data';
 
 function Table() {
-  const { data, isFetching, filterTable, orderTable } = useContext(PlanetsContext);
+  const { isFetching, setTable } = useContext(PlanetsContext);
 
-  return ( // Ver key creator
+  return ( // Repensar filtros presentes na tabela!!!
     <div>
-      <h1>Table</h1>
       { !isFetching && (
         <table>
           <thead>
             <tr>
-              {Object.keys(data[0]).map((key) => <th key={ key }>{key}</th>)}
+              {TABLE_HEADER.map((key) => <th key={ uuidv4() }>{key}</th>)}
             </tr>
           </thead>
           <tbody>
-            { orderTable(data).map((planet) => filterTable(planet) && (
+            { setTable().map((planet) => (
               <tr key={ planet.name }>
                 { Object.values(planet).map((value) => (
                   <td
                     data-testid={ value === planet.name && 'planet-name' }
-                    key={ value }
+                    key={ uuidv4() }
                   >
                     {value}
                   </td>)) }

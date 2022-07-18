@@ -1,6 +1,8 @@
 * {
-  border: 1px solid black;
-  margin: 1px;
-  padding: 1px;
+  background-color: black;
+  color: rgb(255, 253, 244);
+  font-size: calc(12px + 0.5vw);
+  margin: 0;
+  padding: 0;
   text-align: center;
 }
