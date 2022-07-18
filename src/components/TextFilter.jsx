@@ -1,12 +1,21 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import Input from './Input';
 
 function TextFilter() {
-  const { changeFilterByText } = useContext(PlanetsContext);
+  const { changeFilter, filter } = useContext(PlanetsContext);
   return (
     <div>
-      <h3>TextFilter</h3>
-      <input type="text" onChange={ changeFilterByText } data-testid="name-filter" />
+      <Input
+        name="textSearch"
+        label="Digite o nome do planeta: "
+        type="text"
+        value={ filter.filterByName.name }
+        testid="name-filter"
+        handleChange={
+          ({ target }) => changeFilter('filterByName', { name: target.value })
+        }
+      />
     </div>
   );
 }

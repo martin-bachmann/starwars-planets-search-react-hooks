@@ -1,3 +1,4 @@
+// Dados de teste fornecidos pela Trybe
 const testData = {
   count: 60,
   next: 'https://swapi-trybe.herokuapp.com/api/planets/?page=2',

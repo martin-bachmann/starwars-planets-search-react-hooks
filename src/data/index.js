@@ -3,3 +3,19 @@ export const COLUMN_LIST = [
 ];
 
 export const COMPARISON_LIST = ['maior que', 'menor que', 'igual a'];
+
+export const TABLE_HEADER = [
+  'Name',
+  'Rotation Period',
+  'Orbital Period',
+  'Diameter',
+  'Climate',
+  'Gravity',
+  'Terrain',
+  'Surface Water',
+  'Population',
+  'Films',
+  'Created',
+  'Edited',
+  'URL',
+];
