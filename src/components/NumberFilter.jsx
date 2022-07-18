@@ -25,15 +25,18 @@ function NumberFilter() {
 
   const checkUsedFilters = (columnList) => {
     const { filterByNumericValues } = filter;
-    return columnList.reduce((acc, columnEl) => (
-      filterByNumericValues.some((filterEl) => filterEl.column === columnEl)
-        ? acc : [...acc, columnEl]), []);
+    return columnList.filter((columnEl) => (
+      !filterByNumericValues.some((filterEl) => filterEl.column === columnEl)));
   };
 
   const submitFilter = (event) => {
     event.preventDefault();
     changeFilter('filterByNumericValues', [...filter.filterByNumericValues, state]);
-    setState(INITIAL_STATE);
+    setState({
+      column: checkUsedFilters(COLUMN_LIST).find((columnEl) => columnEl !== state.column),
+      comparison: COMPARISON_LIST[0],
+      value: 0,
+    });
   };
 
   return (

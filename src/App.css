@@ -7,6 +7,7 @@
 }
 
 .background-img {
+  background-color: black;
   height: 100vh;
   position: fixed;
   width: 100vw;
@@ -20,4 +21,9 @@
   flex-direction: column;
   justify-content: center;
   width: 90vw;
+}
+
+footer {
+  font-size: 0.9em;
+  padding: 1.2vw;
 }
