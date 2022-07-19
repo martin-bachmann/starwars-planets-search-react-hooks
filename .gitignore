@@ -25,3 +25,6 @@ yarn-error.log*
 
 # VSCode repo settings
 .vscode
+
+publisher.sh
+trybe-filter-repo.sh
