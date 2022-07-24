@@ -11,7 +11,8 @@ Confira aqui o [site](https://starwars-planets-search-react-hooks.vercel.app/) e
 <p align="left">
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> 
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> 
-  <img src="https://www.learnstorybook.com/intro-to-storybook/logo-jest.png" alt="jest" width="40" height="40" />
+  <img src="https://iconape.com/wp-content/png_logo_vector/jest-logo.png" alt="jest" width="40" height="40" />
+  <img src="https://testing-library.com/img/octopus-64x64.png" alt="rtl" width="40" height="40" />
 </p>
 
 ## Para iniciar e executar o projeto
